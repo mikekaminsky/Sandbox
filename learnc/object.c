@@ -26,7 +26,7 @@ int Object_init(void *self)
   return 1;
 }
 
-void *object_move(void *self, Direction direction)
+void *Object_move(void *self, Direction direction)
 {
   printf("You can't go that direction.\n");
   return NULL;
@@ -56,7 +56,7 @@ void *Object_new(size_t size, Object proto, char *description)
   el->description = strdup(description);
 
   // initialize it with whatever init we were give
-  if (!el->init(el())) {
+  if (!el->init(el)) {
     el->destroy(el);
     return NULL;
   } else {
