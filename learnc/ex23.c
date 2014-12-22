@@ -80,8 +80,27 @@ int main(int argc, const char *argv[])
   check(valid_copy(to, 1000, 'y'), "Not initialized right.");
 
   // use normal copy to
-  rc = normal_copy(from, to, 1000)
+  rc = normal_copy(from, to, 1000);
+  check(rc == 1000, "Normal copy failed: %d", rc);
+  check(valid_copy(to,1000,'x'), "Normal copy failed.");
 
+  // reset
+  memset(to, 'y', 1000);
+
+  // duffs version
+  rc = duffs_device(from, to, 1000);
+  check(rc == 1000, "Duff's device failed: %d", rc);
+  check(valid_copy(to, 1000, 'x'), "Duff's device failed to cpy.");
+
+  //reset
+  memset(to, 'y', 1000);
+
+  // zed's version
+  rc = zeds_device(from, to, 1000);
+  check(rc == 1000, "Zed's device failed: %d", rc);
+  check(valid_copy(to, 1000, 'x'), "Zed's device failed to cpy.");
 
   return 0;
+error:
+  return 1;
 }
